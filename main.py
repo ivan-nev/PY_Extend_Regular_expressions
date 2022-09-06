@@ -3,8 +3,6 @@ from pprint import pprint
 # читаем адресную книгу в формате CSV в список contacts_list
 import csv
 import pandas as pd
-import numpy
-
 
 if __name__ == '__main__':
 
@@ -12,10 +10,8 @@ if __name__ == '__main__':
         rows = csv.reader(f, delimiter="\n")
         contacts_list = list(rows)
 
-
     #  выполните пункты 1-3 ДЗ
     contacts_list_good = []
-
     pat_tel = r'(\+7|8)\s*\(*(\d{3})\)*\s*\-*(\d{3})\s*\-*(\d{2})\s*\-*(\d{2})(\s)*\(*(доб.)*\.*\s*(\d+)*\)*'
     sub_tel = r'+7(\2)\3-\4-\5\6\7\8'
     pat_fio = r'([A-Я][а-я]+)\s([A-Я][А-я]+)\s([А-я]+)(,)(,)(,)'
@@ -28,21 +24,15 @@ if __name__ == '__main__':
         result = [re.sub(pat_fio2, sub_fio2, result)]
         res2 = result[0].split(',')
         contacts_list_good.append(res2)
-    pprint(contacts_list_good)
-    contacts_list_good[0].append('0') #доб искуственный столбец т.к. в строке 5 лишняя зпт
+    contacts_list_good[0].append('0')  # доб искуственный столбец т.к. в строке 5 лишняя зпт
 
-    df = pd.DataFrame(contacts_list_good, columns = contacts_list_good[0])
-    df.drop(labels=[0], axis=0, inplace=True) #удаляет 0 строку т.к в ней названия колонок
-    pprint(df)
+    df = pd.DataFrame(contacts_list_good, columns=contacts_list_good[0])
+    df.drop(labels=[0], axis=0, inplace=True)  # удаляет 0 строку т.к в ней названия колонок
     dz = df.groupby(['lastname', 'firstname'])[
-        ['lastname', 'firstname','surname','organization','position','phone','email']].max()
+        ['lastname', 'firstname', 'surname', 'organization', 'position', 'phone', 'email']].max()
     # https://datagy.io/pandas-groupby/
     pprint(dz)
     dz.to_csv('phonebook.csv', index=False)
-
-
-
-
 
     #  сохраните получившиеся данные в другой файл
     # # код для записи файла в формате CSV
@@ -57,4 +47,3 @@ if __name__ == '__main__':
     # # data.to_csv('123.csv', index=False)
     # # # dy = data.duplicated(subset=['brand','style'])
     # # # print(dy)
-
