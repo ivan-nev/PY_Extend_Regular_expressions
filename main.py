@@ -33,7 +33,8 @@ if __name__ == '__main__':
     df.drop(labels=[0], axis=0, inplace=True) #удаляет 0 строку т.к в ней названия колонок
     pprint(df)
     dz = df.groupby(['lastname', 'firstname'])[
-        ['lastname', 'firstname','surname','organization','position','phone','email']].sum()
+        ['lastname', 'firstname','surname','organization','position','phone','email']].max()
+    # https://datagy.io/pandas-groupby/
     pprint(dz)
     dz.to_csv('phonebook.csv', index=False)
 
