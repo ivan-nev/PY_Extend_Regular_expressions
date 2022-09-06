@@ -28,8 +28,10 @@ if __name__ == '__main__':
         result = [re.sub(pat_fio2, sub_fio2, result)]
         res2 = result[0].split(',')
         contacts_list_good.append(res2)
-    # pprint(contacts_list_good)
-    df = pd.DataFrame(contacts_list_good, columns=contacts_list_good[0])
+    pprint(contacts_list_good)
+    contacts_list_good[0].append('0') #доб искуственный столбец т.к. в строке 5 лишняя зпт
+
+    df = pd.DataFrame(contacts_list_good, columns = contacts_list_good[0])
     df.drop(labels=[0], axis=0, inplace=True) #удаляет 0 строку т.к в ней названия колонок
     pprint(df)
     dz = df.groupby(['lastname', 'firstname'])[
